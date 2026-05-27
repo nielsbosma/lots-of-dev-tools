@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+  --font-display: "Press Start 2P", "IBM Plex Mono", monospace;
+
+  --color-retro-green: #39ff14;
+  --color-retro-amber: #ffbf00;
+  --color-retro-cyan: #00ffff;
+  --color-retro-magenta: #ff00ff;
+  --color-retro-bg: #0a0a0a;
+  --color-retro-surface: #1a1a2e;
+  --color-retro-border: #333366;
+  --color-retro-text: #e0e0e0;
+  --color-retro-muted: #888888;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-retro-border);
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-retro-bg);
+    color: var(--color-retro-text);
+    font-family: var(--font-mono);
+  }
+}
