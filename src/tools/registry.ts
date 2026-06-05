@@ -17,6 +17,13 @@ export const toolRegistry: ToolDefinition[] = [
     component: () => import("./url-encoder/url-encoder"),
   },
   {
+    id: "html-encoder",
+    name: "HTML Encoder/Decoder",
+    description: "Encode or decode HTML entities",
+    category: "Encoding",
+    component: () => import("./html-encoder/html-encoder"),
+  },
+  {
     id: "color-converter",
     name: "Color Converter",
     description: "Convert colors between HEX, RGB, and HSL",
