@@ -1,24 +1,27 @@
 import { useParams } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import { getToolById } from "@/tools/registry";
-import type { ToolDefinition } from "@/tools/registry";
+import { getToolById, toolRegistry } from "@/tools/registry";
 
-const lazyCache = new Map<string, React.LazyExoticComponent<React.ComponentType>>();
+// Eagerly create all lazy components at module load time
+const lazyComponents = new Map(
+  toolRegistry.map((tool) => [tool.id, lazy(tool.component)])
+);
 
-function getLazyComponent(tool: ToolDefinition) {
-  if (!lazyCache.has(tool.id)) {
-    lazyCache.set(tool.id, lazy(tool.component));
-  }
-  return lazyCache.get(tool.id)!;
+// Wrapper component to render cached lazy component
+// Component is retrieved from a module-level cache, so it's not recreated on each render
+/* eslint-disable react-hooks/static-components */
+function LazyToolComponent({ toolId }: { toolId: string }) {
+  const Component = lazyComponents.get(toolId);
+  if (!Component) return null;
+  return <Component />;
 }
+/* eslint-enable react-hooks/static-components */
 
 export function ToolPage() {
   const { toolId } = useParams<{ toolId: string }>();
   const tool = toolId ? getToolById(toolId) : undefined;
 
-  const LazyComponent = tool ? getLazyComponent(tool) : null;
-
-  if (!tool || !LazyComponent) {
+  if (!tool) {
     return (
       <div className="text-retro-magenta">
         <p>{">"} ERROR: Tool not found</p>
@@ -42,7 +45,7 @@ export function ToolPage() {
             <p className="text-retro-cyan animate-pulse">Loading...</p>
           }
         >
-          <LazyComponent />
+          <LazyToolComponent toolId={tool.id} />
         </Suspense>
       </div>
     </div>
