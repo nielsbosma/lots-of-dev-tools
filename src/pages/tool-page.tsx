@@ -1,15 +1,22 @@
 import { useParams } from "react-router-dom";
-import { Suspense, lazy, useMemo } from "react";
+import { Suspense, lazy } from "react";
 import { getToolById } from "@/tools/registry";
+import type { ToolDefinition } from "@/tools/registry";
+
+const lazyCache = new Map<string, React.LazyExoticComponent<React.ComponentType>>();
+
+function getLazyComponent(tool: ToolDefinition) {
+  if (!lazyCache.has(tool.id)) {
+    lazyCache.set(tool.id, lazy(tool.component));
+  }
+  return lazyCache.get(tool.id)!;
+}
 
 export function ToolPage() {
   const { toolId } = useParams<{ toolId: string }>();
   const tool = toolId ? getToolById(toolId) : undefined;
 
-  const LazyComponent = useMemo(() => {
-    if (!tool) return null;
-    return lazy(tool.component);
-  }, [tool]);
+  const LazyComponent = tool ? getLazyComponent(tool) : null;
 
   if (!tool || !LazyComponent) {
     return (
