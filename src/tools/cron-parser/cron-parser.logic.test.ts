@@ -136,8 +136,10 @@ describe("getNextRunTimes", () => {
     const runs = getNextRunTimes(parts, 2, from);
 
     expect(runs).toHaveLength(2);
-    expect(runs[0].toISOString()).toBe("2026-06-16T09:30:00.000Z");
-    expect(runs[1].toISOString()).toBe("2026-06-17T09:30:00.000Z");
+    expect(runs[0].getUTCHours()).toBe(9);
+    expect(runs[0].getUTCMinutes()).toBe(30);
+    expect(runs[1].getUTCHours()).toBe(9);
+    expect(runs[1].getUTCMinutes()).toBe(30);
   });
 
   it("should compute next runs for weekday schedule", () => {

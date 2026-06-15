@@ -245,20 +245,20 @@ export function getNextRunTimes(
 ): Date[] {
   const results: Date[] = [];
   const current = new Date(from);
-  current.setSeconds(0, 0);
+  current.setUTCSeconds(0, 0);
 
   const maxIterations = 100000;
   let iterations = 0;
 
   while (results.length < count && iterations < maxIterations) {
     iterations++;
-    current.setMinutes(current.getMinutes() + 1);
+    current.setUTCMinutes(current.getUTCMinutes() + 1);
 
-    const minute = current.getMinutes();
-    const hour = current.getHours();
-    const dayOfMonth = current.getDate();
-    const month = current.getMonth() + 1;
-    const dayOfWeek = current.getDay();
+    const minute = current.getUTCMinutes();
+    const hour = current.getUTCHours();
+    const dayOfMonth = current.getUTCDate();
+    const month = current.getUTCMonth() + 1;
+    const dayOfWeek = current.getUTCDay();
 
     if (
       parts.minute.values.includes(minute) &&

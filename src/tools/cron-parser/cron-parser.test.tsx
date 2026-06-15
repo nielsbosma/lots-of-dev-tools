@@ -47,14 +47,17 @@ describe("CronParser component", () => {
     const user = userEvent.setup();
     render(<CronParser />);
 
-    const countInput = screen.getByLabelText("Next N runs");
-    await user.clear(countInput);
-    await user.type(countInput, "3");
+    const expressionInput = screen.getByLabelText("Cron Expression");
+    await user.type(expressionInput, "* * * * *");
 
-    await user.type(screen.getByLabelText("Cron Expression"), "* * * * *");
+    const countInput = screen.getByLabelText("Next N runs") as HTMLInputElement;
+    await user.tripleClick(countInput);
+    await user.keyboard("3");
+
     await user.click(screen.getByRole("button", { name: "Parse" }));
 
-    expect(screen.getByText(/NEXT 3 RUNS/i)).toBeInTheDocument();
+    const results = screen.getAllByText(/\d+\./);
+    expect(results).toHaveLength(3);
   });
 
   it("parses on Enter key press", async () => {
