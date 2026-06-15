@@ -31,6 +31,13 @@ export const toolRegistry: ToolDefinition[] = [
     component: () => import("./color-converter/color-converter"),
   },
   {
+    id: "case-converter",
+    name: "Case Converter",
+    description: "Convert text between camelCase, snake_case, kebab-case, PascalCase, CONSTANT_CASE, and Title Case",
+    category: "Text",
+    component: () => import("./case-converter/case-converter"),
+  },
+  {
     id: "cron-parser",
     name: "Cron Expression Parser",
     description: "Explain a cron expression in plain English and list the next N run times",
