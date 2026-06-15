@@ -30,6 +30,13 @@ export const toolRegistry: ToolDefinition[] = [
     category: "Color",
     component: () => import("./color-converter/color-converter"),
   },
+  {
+    id: "case-converter",
+    name: "Case Converter",
+    description: "Convert text between camelCase, snake_case, kebab-case, PascalCase, CONSTANT_CASE, and Title Case",
+    category: "Text",
+    component: () => import("./case-converter/case-converter"),
+  },
 ];
 
 export function getToolById(id: string): ToolDefinition | undefined {
