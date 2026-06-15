@@ -2,7 +2,7 @@ export function toWords(input: string): string[] {
   if (!input) return [];
 
   // Split on underscores, hyphens, and spaces
-  let words = input.split(/[_\-\s]+/);
+  const words = input.split(/[_\-\s]+/);
 
   // Further split camelCase and PascalCase
   const result: string[] = [];
