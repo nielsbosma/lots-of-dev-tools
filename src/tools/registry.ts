@@ -30,6 +30,13 @@ export const toolRegistry: ToolDefinition[] = [
     category: "Color",
     component: () => import("./color-converter/color-converter"),
   },
+  {
+    id: "cron-parser",
+    name: "Cron Expression Parser",
+    description: "Explain a cron expression in plain English and list the next N run times",
+    category: "Inspector",
+    component: () => import("./cron-parser/cron-parser"),
+  },
 ];
 
 export function getToolById(id: string): ToolDefinition | undefined {
