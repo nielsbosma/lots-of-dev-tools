@@ -2,11 +2,6 @@
 
 A collection of developer utilities with a retro terminal aesthetic. Built with Vite, React, TypeScript, Tailwind CSS, and Shadcn-style components.
 
-## Tools
-
-- **URL Encoder/Decoder** — Encode or decode URL components
-- **Color Converter** — Convert colors between HEX, RGB, and HSL
-
 ## Getting Started
 
 ```powershell
