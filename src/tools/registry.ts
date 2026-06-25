@@ -44,6 +44,13 @@ export const toolRegistry: ToolDefinition[] = [
     category: "Inspector",
     component: () => import("./cron-parser/cron-parser"),
   },
+  {
+    id: "jwt-tester",
+    name: "JWT Tester",
+    description: "Decode, verify, and generate JSON Web Tokens",
+    category: "Security",
+    component: () => import("./jwt-tester/jwt-tester"),
+  },
 ];
 
 export function getToolById(id: string): ToolDefinition | undefined {
