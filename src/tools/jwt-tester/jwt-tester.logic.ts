@@ -57,7 +57,8 @@ export function decodeJwt(token: string): DecodedJwt {
     };
   } catch (e) {
     throw new Error(
-      `Failed to decode JWT: ${e instanceof Error ? e.message : String(e)}`
+      `Failed to decode JWT: ${e instanceof Error ? e.message : String(e)}`,
+      { cause: e }
     );
   }
 }
