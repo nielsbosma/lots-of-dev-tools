@@ -26,15 +26,11 @@ describe("JwtTester", () => {
     await user.type(input, token);
 
     // Check decoded output
-    const headerTextarea = screen.getByLabelText("Header");
-    expect(headerTextarea).toHaveValue(
-      expect.stringContaining('"alg": "HS256"')
-    );
+    const headerTextarea = screen.getByLabelText("Header") as HTMLTextAreaElement;
+    expect(headerTextarea.value).toContain('"alg": "HS256"');
 
-    const payloadTextarea = screen.getByLabelText("Payload");
-    expect(payloadTextarea).toHaveValue(
-      expect.stringContaining('"name": "John Doe"')
-    );
+    const payloadTextarea = screen.getByLabelText("Payload") as HTMLTextAreaElement;
+    expect(payloadTextarea.value).toContain('"name": "John Doe"');
 
     const signatureTextarea = screen.getByLabelText("Signature (base64url)");
     expect(signatureTextarea).toHaveValue(
@@ -151,7 +147,7 @@ describe("JwtTester", () => {
 
     // Wait for generated token
     const generatedTokenTextarea =
-      await screen.findByLabelText("Generated Token");
-    expect(generatedTokenTextarea).toHaveValue(expect.stringMatching(/^[\w-]+\.[\w-]+\.[\w-]+$/));
+      await screen.findByLabelText("Generated Token") as HTMLTextAreaElement;
+    expect(generatedTokenTextarea.value).toMatch(/^[\w-]+\.[\w-]+\.[\w-]+$/);
   });
 });
