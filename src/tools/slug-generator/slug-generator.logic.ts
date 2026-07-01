@@ -214,11 +214,9 @@ export function toSlug(input: string, separator = "-"): string {
   // 3. Replace runs of non-alphanumeric characters with separator
   result = result.replace(/[^a-z0-9]+/g, separator);
 
-  // 4. Trim leading/trailing separators
-  result = result.replace(new RegExp(`^${separator}+|${separator}+$`, "g"), "");
-
-  // 5. Collapse consecutive separators (should not happen with the above, but defensive)
+  // 4 & 5. Escape separator for regex and trim leading/trailing + collapse consecutive
   const escapedSep = separator.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  result = result.replace(new RegExp(`^${escapedSep}+|${escapedSep}+$`, "g"), "");
   result = result.replace(new RegExp(`${escapedSep}{2,}`, "g"), separator);
 
   return result;
