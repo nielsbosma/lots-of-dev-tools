@@ -73,13 +73,13 @@ export default function SlugGenerator() {
           <span className="text-sm">Separator:</span>
           <Button
             onClick={() => handleSeparatorChange("-")}
-            variant={separator === "-" ? "default" : "outline"}
+            variant={separator === "-" ? "default" : "ghost"}
           >
             -
           </Button>
           <Button
             onClick={() => handleSeparatorChange("_")}
-            variant={separator === "_" ? "default" : "outline"}
+            variant={separator === "_" ? "default" : "ghost"}
           >
             _
           </Button>
@@ -90,12 +90,7 @@ export default function SlugGenerator() {
         <div className="flex justify-between items-center mb-1">
           <Label htmlFor="output-text">Slug</Label>
           {output && (
-            <Button
-              onClick={copyToClipboard}
-              variant="outline"
-              size="sm"
-              className="text-xs"
-            >
+            <Button onClick={copyToClipboard} variant="ghost" className="text-xs">
               {copied ? "Copied!" : "Copy"}
             </Button>
           )}
