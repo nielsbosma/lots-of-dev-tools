@@ -87,7 +87,6 @@ export default function JwtTester() {
   // Decode tab state
   const [decodeInput, setDecodeInput] = useState("");
   const [decodedHeader, setDecodedHeader] = useState("");
-  const [decodedPayload, setDecodedPayload] = useState("");
   const [decodedSignature, setDecodedSignature] = useState("");
   const [expiryStatus, setExpiryStatus] = useState("");
   const [decodeError, setDecodeError] = useState("");
@@ -123,7 +122,6 @@ export default function JwtTester() {
 
     if (!value.trim()) {
       setDecodedHeader("");
-      setDecodedPayload("");
       setDecodedSignature("");
       setExpiryStatus("");
       setDecodedJwt(null);
@@ -133,7 +131,6 @@ export default function JwtTester() {
     try {
       const decoded = decodeJwt(value);
       setDecodedHeader(JSON.stringify(decoded.header, null, 2));
-      setDecodedPayload(JSON.stringify(decoded.payload, null, 2));
       setDecodedSignature(decoded.signature);
       setDecodedJwt(decoded);
 
@@ -152,7 +149,6 @@ export default function JwtTester() {
     } catch (e) {
       setDecodeError((e as Error).message);
       setDecodedHeader("");
-      setDecodedPayload("");
       setDecodedSignature("");
       setExpiryStatus("");
       setDecodedJwt(null);

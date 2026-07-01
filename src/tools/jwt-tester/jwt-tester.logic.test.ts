@@ -102,12 +102,12 @@ describe("jwt-tester.logic", () => {
     });
 
     it("should handle null exp correctly", () => {
-      const payload = { exp: null as any };
+      const payload = { exp: null };
       expect(isExpired(payload)).toBe(false);
     });
 
     it("should handle undefined exp correctly", () => {
-      const payload = { exp: undefined as any };
+      const payload = { exp: undefined };
       expect(isExpired(payload)).toBe(false);
     });
   });
@@ -143,7 +143,7 @@ describe("jwt-tester.logic", () => {
     });
 
     it("should handle null exp and iat correctly", () => {
-      const payload = { exp: null as any, iat: null as any };
+      const payload = { exp: null, iat: null };
       const info = getExpiryInfo(payload);
 
       expect(info.expired).toBe(false);
