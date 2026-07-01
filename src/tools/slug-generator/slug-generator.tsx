@@ -43,7 +43,7 @@ export default function SlugGenerator() {
       await navigator.clipboard.writeText(output);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (e) {
+    } catch {
       setError("Failed to copy to clipboard");
     }
   }
