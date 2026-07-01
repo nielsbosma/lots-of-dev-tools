@@ -25,12 +25,18 @@ describe("JwtTester", () => {
     const input = screen.getByLabelText("JWT Token");
     await user.type(input, token);
 
-    // Check decoded output
+    // Check that standard claims are displayed
+    expect(screen.getByText("Standard Claims")).toBeInTheDocument();
+    expect(screen.getByText(/Issued At/)).toBeInTheDocument();
+    expect(screen.getByText(/Subject/)).toBeInTheDocument();
+
+    // Check that custom claims are displayed
+    const customClaimsTextarea = screen.getByLabelText("Custom Claims") as HTMLTextAreaElement;
+    expect(customClaimsTextarea.value).toContain('"name": "John Doe"');
+
+    // Check decoded header and signature
     const headerTextarea = screen.getByLabelText("Header") as HTMLTextAreaElement;
     expect(headerTextarea.value).toContain('"alg": "HS256"');
-
-    const payloadTextarea = screen.getByLabelText("Payload") as HTMLTextAreaElement;
-    expect(payloadTextarea.value).toContain('"name": "John Doe"');
 
     const signatureTextarea = screen.getByLabelText("Signature (base64url)");
     expect(signatureTextarea).toHaveValue(

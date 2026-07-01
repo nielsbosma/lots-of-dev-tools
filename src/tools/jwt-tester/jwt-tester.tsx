@@ -190,7 +190,7 @@ export default function JwtTester() {
     }
   }
 
-  async   async function handleGenerate() {
+  async function handleGenerate() {
     setGenerateError("");
     setGeneratedToken("");
 
