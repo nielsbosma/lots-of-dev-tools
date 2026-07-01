@@ -48,7 +48,7 @@ export const toolRegistry: ToolDefinition[] = [
     id: "jwt-tester",
     name: "JWT Tester",
     description: "Decode, verify, and generate JSON Web Tokens",
-    category: "Security",
+    category: "Inspector",
     component: () => import("./jwt-tester/jwt-tester"),
   },
 ];

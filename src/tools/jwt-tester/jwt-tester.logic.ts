@@ -65,7 +65,7 @@ export function decodeJwt(token: string): DecodedJwt {
 
 export function isExpired(payload: object): boolean {
   const exp = (payload as { exp?: number }).exp;
-  if (!exp) return false;
+  if (exp === undefined || exp === null) return false;
 
   const nowSeconds = Math.floor(Date.now() / 1000);
   return exp < nowSeconds;
@@ -83,8 +83,8 @@ export function getExpiryInfo(payload: object): ExpiryInfo {
 
   return {
     expired: isExpired(payload),
-    expiresAt: exp ? new Date(exp * 1000) : null,
-    issuedAt: iat ? new Date(iat * 1000) : null,
+    expiresAt: exp !== undefined && exp !== null ? new Date(exp * 1000) : null,
+    issuedAt: iat !== undefined && iat !== null ? new Date(iat * 1000) : null,
   };
 }
 
@@ -115,6 +115,12 @@ export async function verifyHS256(
   token: string,
   secret: string
 ): Promise<boolean> {
+  const decoded = decodeJwt(token);
+  const alg = (decoded.header as { alg?: string }).alg;
+  if (alg !== "HS256") {
+    throw new Error(`Invalid algorithm: expected HS256, got ${alg}`);
+  }
+
   const parts = token.split(".");
   if (parts.length !== 3) {
     throw new Error("Malformed JWT");
@@ -146,6 +152,12 @@ export async function verifyRS256(
   token: string,
   publicKeyPem: string
 ): Promise<boolean> {
+  const decoded = decodeJwt(token);
+  const alg = (decoded.header as { alg?: string }).alg;
+  if (alg !== "RS256") {
+    throw new Error(`Invalid algorithm: expected RS256, got ${alg}`);
+  }
+
   const parts = token.split(".");
   if (parts.length !== 3) {
     throw new Error("Malformed JWT");
@@ -194,7 +206,8 @@ export async function generateJwt(
   payload: object,
   secret: string
 ): Promise<string> {
-  const headerJson = JSON.stringify(header);
+  const normalizedHeader = { ...header, alg: "HS256" };
+  const headerJson = JSON.stringify(normalizedHeader);
   const payloadJson = JSON.stringify(payload);
 
   const headerB64 = encodeBase64Url(headerJson);
