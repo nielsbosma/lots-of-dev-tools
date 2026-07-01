@@ -38,6 +38,13 @@ export const toolRegistry: ToolDefinition[] = [
     component: () => import("./case-converter/case-converter"),
   },
   {
+    id: "slug-generator",
+    name: "Slug Generator",
+    description: "Convert text into URL-safe slugs with transliteration",
+    category: "Text",
+    component: () => import("./slug-generator/slug-generator"),
+  },
+  {
     id: "cron-parser",
     name: "Cron Expression Parser",
     description: "Explain a cron expression in plain English and list the next N run times",
