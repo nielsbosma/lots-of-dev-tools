@@ -7,15 +7,16 @@ export function Layout() {
       <Sidebar />
       <main className="flex-1 overflow-y-auto p-6">
         <Outlet />
-        <footer className="mt-12 pt-4 border-t border-retro-border text-center">
+        <footer className="mt-12 pt-4 border-t border-retro-border text-center text-retro-muted text-xs">
           <a
             href="https://github.com/nielsbosma/lots-of-dev-tools"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-retro-muted text-xs hover:text-retro-green transition-colors"
+            className="hover:text-retro-green transition-colors"
           >
             [GITHUB]
           </a>
+          <span> · Created by Niels Bosma</span>
         </footer>
       </main>
     </div>

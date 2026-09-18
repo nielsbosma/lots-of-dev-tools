@@ -23,4 +23,18 @@ describe("Layout", () => {
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });
+
+  it("renders attribution to Niels Bosma next to the GitHub link", () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<div>content</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText(/created by niels bosma/i)).toBeInTheDocument();
+  });
 });
