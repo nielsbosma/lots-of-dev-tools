@@ -58,6 +58,13 @@ export const toolRegistry: ToolDefinition[] = [
     category: "Inspector",
     component: () => import("./jwt-tester/jwt-tester"),
   },
+  {
+    id: "regex-tester",
+    name: "Regex Tester",
+    description: "Test regular expressions against sample text with live match and capture-group output",
+    category: "Inspector",
+    component: () => import("./regex-tester/regex-tester"),
+  },
 ];
 
 export function getToolById(id: string): ToolDefinition | undefined {

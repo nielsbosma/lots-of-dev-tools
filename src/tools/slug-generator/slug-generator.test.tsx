@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SlugGenerator from "./slug-generator";
@@ -75,6 +75,29 @@ describe("SlugGenerator", () => {
 
     // Copy button appears after slug is generated
     expect(await screen.findByRole("button", { name: /copy/i })).toBeInTheDocument();
+  });
+
+  it("copies the slug to the clipboard when the copy button is clicked", async () => {
+    const user = userEvent.setup();
+    render(<SlugGenerator />);
+
+    await user.type(screen.getByLabelText(/input text/i), "Hello World");
+
+    // Install the clipboard stub after typing: user-event's own typing
+    // implementation installs its own navigator.clipboard stub on first use,
+    // which would otherwise clobber one set up earlier.
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText },
+      configurable: true,
+    });
+
+    await user.click(await screen.findByRole("button", { name: /copy/i }));
+
+    // Wait for the async clipboard write to resolve and flip the button label
+    // before asserting on the mock, since the click handler is async internally.
+    expect(await screen.findByRole("button", { name: /copied/i })).toBeInTheDocument();
+    expect(writeText).toHaveBeenCalledWith("hello-world");
   });
 
   it("handles accented characters", async () => {
